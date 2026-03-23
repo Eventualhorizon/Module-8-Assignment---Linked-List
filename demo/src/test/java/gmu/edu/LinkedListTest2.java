@@ -371,4 +371,74 @@ public class LinkedListTest2 {
         list.add(null);
         assertEquals(2, list.lastIndexOf(null));
     }
+
+
+    // Queue and dequeue operations
+
+    @Test
+    public void testPeekPollOnEmptyList() {
+        assertNull(emptyList.peek());
+        assertNull(emptyList.peekFirst());
+        assertNull(emptyList.peekLast());
+        assertNull(emptyList.poll());
+        assertNull(emptyList.pollFirst());
+        assertNull(emptyList.pollLast());
+    }
+
+    @Test
+    public void testPeekPollOnNonEmptyList() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        assertEquals("A", list.peek());
+        assertEquals("A", list.peekFirst());
+        assertEquals("C", list.peekLast());
+
+        assertEquals("A", list.poll());
+        assertEquals("B", list.pollFirst());
+        assertEquals("C", list.pollLast());
+
+        assertEquals(0, list.size());
+    }
+
+    @Test
+    public void testOfferOfferFirstOfferLast() {
+        assertTrue(list.offer("X"));
+        assertTrue(list.offerFirst("Y"));
+        assertTrue(list.offerLast("Z"));
+
+        assertEquals("Y", list.getFirst());
+        assertEquals("X", list.get(1));
+        assertEquals("Z", list.getLast());
+    }
+
+    @Test
+    public void testPushPopElement() {
+        list.push("First");
+        list.push("Second");
+
+        assertEquals("Second", list.element());
+        assertEquals("Second", list.pop());
+        assertEquals("First", list.pop());
+
+        // Empty list exceptions
+        assertThrows(NoSuchElementException.class, () -> emptyList.element());
+        assertThrows(NoSuchElementException.class, () -> emptyList.pop());
+    }
+
+    @Test
+    public void testNullElementsInQueueMethods() {
+        list.add(null);
+        list.add("NotNull");
+
+        assertNull(list.peek());
+        assertNull(list.poll());
+        assertEquals("NotNull", list.poll());
+
+        list.offer(null);
+        list.offerFirst(null);
+        assertEquals(2, list.size());
+        assertNull(list.getFirst());
+    }
 }
